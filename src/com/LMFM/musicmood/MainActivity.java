@@ -14,6 +14,8 @@ import java.util.Set;
 
 import android.R.array;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import android.annotation.SuppressLint;
@@ -44,7 +46,12 @@ import android.content.Intent;
 //import android.bluethooth.BluetoothAdapter;
 //import android.bluethooth.BluetoothDevice;
 
-
+import com.google.appengine.api.files.AppEngineFile;
+import com.google.appengine.api.files.FileReadChannel;
+import com.google.appengine.api.files.FileService;
+import com.google.appengine.api.files.FileServiceFactory;
+import com.google.appengine.api.files.FileWriteChannel;
+import com.google.appengine.api.files.GSFileOptions.GSFileOptionsBuilder;
 
 @SuppressLint({ "WorldWriteableFiles", "WorldReadableFiles" })
 public class MainActivity extends Activity {
@@ -184,7 +191,30 @@ public class MainActivity extends Activity {
 
         //String bluetoothname = bluetoothAdapter.getName();
         
+        final Button button4 = (Button) findViewById(R.id.button4);
+        button4.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				  ConnectivityManager networkManager =  (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+				  NetworkInfo NetworkInfo = networkManager.getActiveNetworkInfo(); 
+				  if (NetworkInfo != null && NetworkInfo.isAvailable()){ 
 
+		            	//text.setText("hey your online!!!");
+		            	System.out.println("your are online!!!");
+		            	uploadFile();
+		            	//Do something in here when we are connected   
+
+		            	            }
+		            else{
+		            	System.out.println("Please connect to the internet!!!");
+		            }
+				// if there is network connection
+				// upload the file
+				// else require to connect the Internet
+				
+			}
+        });
         
         
     }
@@ -264,8 +294,7 @@ public class MainActivity extends Activity {
             			//button1.setEnabled(true);
             			//Arrays.fill(AttArray, att);
             			AttList.add(attString);
-            			
-            			//Method for Array
+               			//Method for Array
             			//int lengthArray = AttArray.length;
             			//int indexAtt = lengthArray;
             			//AttArray[indexAtt] = att;
@@ -293,8 +322,7 @@ public class MainActivity extends Activity {
             	//record the data, while the music is playing
             	if (med >0){
             		button1.setEnabled(true);
-            	
-            	if (playing ==true){
+            		if(playing ==true){
             		//Arrays.fill(MedArray, Med);
             		
             		MedList.add(medString);
@@ -448,10 +476,8 @@ public class MainActivity extends Activity {
 			}
     	}
     	catch (FileNotFoundException e) {
-        
     		return;
-        }
-    
+    		}
     	catch (IOException e){
         
     		return ;
@@ -508,7 +534,20 @@ public class MainActivity extends Activity {
         }
     }
     
-    public void upload(){
+    public void uploadFile(){
+    	//x is the file name, typed in the textedit
+        String end = "/r/n";
+        String Hyphens = "--";
+        String boundary = "*****";
+        
+        try
+        {
+        	
+        }catch(Exception e){
+            System.out.println("failed to upload" + e.getMessage());
+            Toast.makeText(MainActivity.this, "failed to upload" + e.getMessage(),
+                Toast.LENGTH_LONG).show();
+        }
     	
     
     }
