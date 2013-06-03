@@ -82,6 +82,8 @@ public class MainActivity extends Activity {
 	ArrayList<String> MedList= new ArrayList();
 
 	//List list=new ArrayList();
+	
+	
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,6 +105,31 @@ public class MainActivity extends Activity {
         
         MediationMes = (TextView)findViewById(R.id.textView5);
         MediationMes.setText("");   
+        
+        
+     // Get the file service
+        FileService fileService = FileServiceFactory.getFileService();
+
+        /**
+         * Set up properties of your new object
+         * After finalizing objects, they are accessible
+         * through Cloud Storage with the URL:
+         * http://storage.googleapis.com/my_bucket/my_object
+         */
+        GSFileOptionsBuilder optionsBuilder = new GSFileOptionsBuilder()
+        .setBucket("my_bucket")
+        .setKey("my_object")
+        .setAcl("public-read")
+        .setMimeType("text/html");
+        //.setUserMetadata("date-created", "092011", "owner", "Jon");
+        
+        try {
+			AppEngineFile writableFile = fileService.createNewGSFile(optionsBuilder.build());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+      
         // Play the music
         final MediaPlayer mediaPlayer1 = MediaPlayer.create(MainActivity.this, R.raw.seagull);
         
@@ -198,21 +225,20 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				  ConnectivityManager networkManager =  (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
 				  NetworkInfo NetworkInfo = networkManager.getActiveNetworkInfo(); 
+				  // Check the network connection, if it connectted
 				  if (NetworkInfo != null && NetworkInfo.isAvailable()){ 
 
 		            	//text.setText("hey your online!!!");
 		            	System.out.println("your are online!!!");
+		            	
+		            	//Upload file when we are connected   
 		            	uploadFile();
-		            	//Do something in here when we are connected   
 
 		            	            }
-		            else{
+		            else{// otherwise, inform user to connect to the Internet or open the WI-FI
 		            	System.out.println("Please connect to the internet!!!");
 		            }
-				// if there is network connection
-				// upload the file
-				// else require to connect the Internet
-				
+
 			}
         });
         
@@ -224,6 +250,7 @@ public class MainActivity extends Activity {
     	
     	tgDevice.close();
         super.onDestroy();
+        
     }
     /**
      * Handles messages from TGDevice
