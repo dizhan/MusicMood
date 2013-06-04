@@ -20,6 +20,7 @@ import android.os.Bundle;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.os.Bundle;
 import android.os.Handler;
@@ -107,7 +108,7 @@ public class MainActivity extends Activity {
         MediationMes.setText("");   
         
         
-     // Get the file service
+        // create an object
         FileService fileService = FileServiceFactory.getFileService();
 
         /**
@@ -117,8 +118,8 @@ public class MainActivity extends Activity {
          * http://storage.googleapis.com/my_bucket/my_object
          */
         GSFileOptionsBuilder optionsBuilder = new GSFileOptionsBuilder()
-        .setBucket("my_bucket")
-        .setKey("my_object")
+        .setBucket("pipelinetest")
+        .setKey("test_object")
         .setAcl("public-read")
         .setMimeType("text/html");
         //.setUserMetadata("date-created", "092011", "owner", "Jon");
@@ -219,25 +220,38 @@ public class MainActivity extends Activity {
         //String bluetoothname = bluetoothAdapter.getName();
         
         final Button button4 = (Button) findViewById(R.id.button4);
+
+        
         button4.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				  ConnectivityManager networkManager =  (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-				  NetworkInfo NetworkInfo = networkManager.getActiveNetworkInfo(); 
-				  // Check the network connection, if it connectted
-				  if (NetworkInfo != null && NetworkInfo.isAvailable()){ 
+	    		button4.setEnabled(false);
+	            ConnectivityManager networkManager =  (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+	    		NetworkInfo NetworkInfo = networkManager.getActiveNetworkInfo(); 
+	    		  // Check the network connection, if it connectted
+	    		  if (NetworkInfo != null && NetworkInfo.isAvailable()){ 
+	    			  	
+	                	//text.setText("hey your online!!!");
+	                	System.out.println("your are online!!!");
+	                	
+	                	
+	                	// link to google account
+	                	uploadFile(fileName.getText().toString());
+	                	//Toast toast;
+	                	//toast.setView(warn);
+	                    //Toast.makeText(this,"Connected",Toast.LENGTH_LONG).show();
+	                	//Upload file when we are connected   
+	                	//button4.setEnabled(true);
 
-		            	//text.setText("hey your online!!!");
-		            	System.out.println("your are online!!!");
-		            	
-		            	//Upload file when we are connected   
-		            	uploadFile();
+	                	            }
+	                else{// otherwise, inform user to connect to the Internet or open the WI-FI
+	                	System.out.println("Please connect to the internet!!!");
+	                	//button4.setEnabled(false);
+	                	//showToast(MainActivity);
+	                	
+	                } 
 
-		            	            }
-		            else{// otherwise, inform user to connect to the Internet or open the WI-FI
-		            	System.out.println("Please connect to the internet!!!");
-		            }
 
 			}
         });
@@ -476,12 +490,6 @@ public class MainActivity extends Activity {
 			FileOutputStream outStream=openFileOutput(fileName+".txt",Activity.MODE_WORLD_WRITEABLE+Activity.MODE_WORLD_READABLE);
 			
 			
-			//outStream.write(AttList.getBytes());
-			//outStream.write(attString.getBytes());
-			//outStream.write(changeRow.getBytes());
-			//outStream.write(medString.getBytes());
-            //outStream.write(MedList.getBytes());
-			
 			for (int i = 0; i<mStringAtt.length; i++){
 			//for (int i = 0; i<mStringAtt.length; i++){
 				String attData = mStringAtt[i];
@@ -499,7 +507,7 @@ public class MainActivity extends Activity {
 				Log.d("the Attention", (String)mStringAtt[i]);
 
 				Log.d("the Mediation", (String)mStringMed[i]);
-				
+				outStream.close();
 			}
     	}
     	catch (FileNotFoundException e) {
@@ -561,8 +569,12 @@ public class MainActivity extends Activity {
         }
     }
     
-    public void uploadFile(){
-    	//x is the file name, typed in the textedit
+
+
+    
+    // upload the file to google account
+    public void uploadFile(String x){
+    	//x is the file name, typed in the textEdit
         String end = "/r/n";
         String Hyphens = "--";
         String boundary = "*****";
@@ -578,5 +590,34 @@ public class MainActivity extends Activity {
     	
     
     }
+    
+    // read the file in google account
+    public void readGoogle(){
+    	
+    }
+    
+    // Check wether the network is conencted.
+    public static boolean isNetworkAvaiable(Activity mActivity){
+    	Context context = mActivity.getApplicationContext();
+  	  ConnectivityManager networkManager =  (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+	  NetworkInfo NetworkInfo = networkManager.getActiveNetworkInfo(); 
+	  // Check the network connection, if it connectted
+	  if (NetworkInfo != null && NetworkInfo.isAvailable()){ 
+		  	
+        	//text.setText("hey your online!!!");
+        	System.out.println("your are online!!!");
+            //Toast.makeText(this,"Connected",Toast.LENGTH_LONG).show();
+        	//Upload file when we are connected   
+        	return true;
+
+        	            }
+        else{// otherwise, inform user to connect to the Internet or open the WI-FI
+        	System.out.println("Please connect to the internet!!!");
+        	return false;
+        }
+    }
+    
+    
+    
 
 }
