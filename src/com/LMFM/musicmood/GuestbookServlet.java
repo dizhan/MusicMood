@@ -22,8 +22,8 @@ import javax.servlet.http.*;
 
 @SuppressWarnings("serial")
 public class GuestbookServlet extends HttpServlet {
-   public static final String BUCKETNAME = "YOUR_BUCKET_NAME";
-   public static final String FILENAME = "YOUR_FILE_NAME";
+   public static final String BUCKETNAME = "pipelinetest";
+   public static final String FILENAME = "eegMobile";
 
   @Override
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -33,7 +33,7 @@ public class GuestbookServlet extends HttpServlet {
     GSFileOptionsBuilder optionsBuilder = new GSFileOptionsBuilder()
        .setBucket(BUCKETNAME)
        .setKey(FILENAME)
-       .setMimeType("text/html")
+       //.setMimeType("text/html")
        .setAcl("public-read")
        .addUserMetadata("myfield1", "my field value");
     AppEngineFile writableFile =

@@ -12,6 +12,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import android.R.array;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
@@ -578,10 +581,15 @@ public class MainActivity extends Activity {
         String end = "/r/n";
         String Hyphens = "--";
         String boundary = "*****";
+        HttpServletRequest req = null; 
+        HttpServletResponse resp = null;
+        
+        
         
         try
         {
-        	
+        	GuestbookServlet eegServlet = new GuestbookServlet();
+        	eegServlet.doGet(req,resp);
         }catch(Exception e){
             System.out.println("failed to upload" + e.getMessage());
             Toast.makeText(MainActivity.this, "failed to upload" + e.getMessage(),
