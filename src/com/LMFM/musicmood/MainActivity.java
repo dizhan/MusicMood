@@ -1,3 +1,4 @@
+// collect the data, and call the functions for the project
 package com.LMFM.musicmood;
 
 import java.io.ByteArrayOutputStream;
@@ -50,12 +51,12 @@ import android.content.Intent;
 //import android.bluethooth.BluetoothAdapter;
 //import android.bluethooth.BluetoothDevice;
 
-import com.google.appengine.api.files.AppEngineFile;
-import com.google.appengine.api.files.FileReadChannel;
-import com.google.appengine.api.files.FileService;
-import com.google.appengine.api.files.FileServiceFactory;
-import com.google.appengine.api.files.FileWriteChannel;
-import com.google.appengine.api.files.GSFileOptions.GSFileOptionsBuilder;
+//import com.google.appengine.api.files.AppEngineFile;
+//import com.google.appengine.api.files.FileReadChannel;
+//import com.google.appengine.api.files.FileService;
+//import com.google.appengine.api.files.FileServiceFactory;
+//import com.google.appengine.api.files.FileWriteChannel;
+//import com.google.appengine.api.files.GSFileOptions.GSFileOptionsBuilder;
 
 @SuppressLint({ "WorldWriteableFiles", "WorldReadableFiles" })
 public class MainActivity extends Activity {
@@ -112,7 +113,7 @@ public class MainActivity extends Activity {
         
         
         // create an object
-        FileService fileService = FileServiceFactory.getFileService();
+        //FileService fileService = FileServiceFactory.getFileService();
 
         /**
          * Set up properties of your new object
@@ -120,7 +121,7 @@ public class MainActivity extends Activity {
          * through Cloud Storage with the URL:
          * http://storage.googleapis.com/my_bucket/my_object
          */
-        GSFileOptionsBuilder optionsBuilder = new GSFileOptionsBuilder()
+        /*GSFileOptionsBuilder optionsBuilder = new GSFileOptionsBuilder()
         .setBucket("pipelinetest")
         .setKey("test_object")
         .setAcl("public-read")
@@ -132,8 +133,7 @@ public class MainActivity extends Activity {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-      
+		} */
         // Play the music
         final MediaPlayer mediaPlayer1 = MediaPlayer.create(MainActivity.this, R.raw.seagull);
         
@@ -237,10 +237,21 @@ public class MainActivity extends Activity {
 	    			  	
 	                	//text.setText("hey your online!!!");
 	                	System.out.println("your are online!!!");
+	                	try {
+							predictiontest predicttest = new predictiontest();
+							
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+	                	System.out.println("hellohello!!!!!!!!!!!!!!!");
 	                	
 	                	
 	                	// link to google account
-	                	uploadFile(fileName.getText().toString());
+	                	//uploadFile(fileName.getText().toString());
 	                	//Toast toast;
 	                	//toast.setView(warn);
 	                    //Toast.makeText(this,"Connected",Toast.LENGTH_LONG).show();
@@ -588,8 +599,8 @@ public class MainActivity extends Activity {
         
         try
         {
-        	GuestbookServlet eegServlet = new GuestbookServlet();
-        	eegServlet.doGet(req,resp);
+        	//GuestbookServlet eegServlet = new GuestbookServlet();
+        	//eegServlet.doGet(req,resp);
         }catch(Exception e){
             System.out.println("failed to upload" + e.getMessage());
             Toast.makeText(MainActivity.this, "failed to upload" + e.getMessage(),

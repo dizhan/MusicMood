@@ -8,6 +8,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/myLib"/>
 	<classpathentry kind="con" path="com.google.gdt.eclipse.managedapis.MANAGED_API_CONTAINER/storage-v1beta2r4lv1.14.2-beta"/>
 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Predictionlib"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Prediction"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
